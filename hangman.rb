@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'yaml'
+
 # class SecretWord
 class SecretWord
   attr_reader :word
@@ -36,9 +38,18 @@ class Game
     game_over_message
   end
 
+  def game_menu
+    puts '(1) New Game'
+    puts '(2) Load Game'
+    input = gets.chomp
+    load_game if input == '2'
+    play
+  end
+
   def solicit_guess
     puts `clear`
     puts 'Welcome to the game of Hangman.'
+    puts 'Save game by typing in "save".'
     puts "You have #{no_of_guesses} guesses remaining."
     puts guessed_word
     puts "\nYour guesses so far: #{guesses}"
@@ -46,6 +57,8 @@ class Game
       puts 'Enter your guess(a - z): '
       guess = gets.chomp.downcase
       return guess if valid_guess?(guess)
+
+      save_game if guess.downcase == 'save'
 
       break
     end
@@ -71,7 +84,20 @@ class Game
     puts 'You win!' if win?
     puts "You lose. The correct answer was #{secret_word}" unless win?
   end
+
+  def save_game
+    File.open('./test.yml', 'w') { |f| YAML.dump([] << self, f) }
+    exit
+  end
+
+  def load_game
+    yaml = YAML.load_file('./test.yml')
+    self.secret_word = yaml[0].secret_word
+    self.guessed_word = yaml[0].guessed_word
+    self.no_of_guesses = yaml[0].no_of_guesses
+    self.guesses = yaml[0].guesses
+  end
 end
 
 game = Game.new
-game.play
+game.game_menu

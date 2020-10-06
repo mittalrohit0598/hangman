@@ -1,0 +1,6 @@
+---
+- !ruby/object:Game
+  secret_word: cosigner
+  guessed_word: c__i____
+  no_of_guesses: 4
+  guesses: 'a b c i '
