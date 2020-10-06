@@ -41,16 +41,19 @@ class Game
     puts 'Welcome to the game of Hangman.'
     puts "You have #{no_of_guesses} guesses remaining."
     puts guessed_word
-    puts
-    puts "Your guesses so far: #{guesses}"
+    puts "\nYour guesses so far: #{guesses}"
     loop do
       puts 'Enter your guess(a - z): '
       guess = gets.chomp.downcase
-      return guess if ('a'..'z').include?(guess) && !guesses.include?(guess)
+      return guess if valid_guess?(guess)
 
       break
     end
     solicit_guess
+  end
+
+  def valid_guess?(guess)
+    ('a'..'z').include?(guess) && !guesses.include?(guess)
   end
 
   def check_guess(guess)
