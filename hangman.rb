@@ -96,15 +96,29 @@ class Game
   end
 
   def load_game
-    puts 'Saved games: '
-    Dir['./saved_games/*'].each { |file| puts file.split('/')[-1].split('.')[0] }
+    unless Dir.exist?('saved_games')
+      puts 'No saved games found. Starting new game...'
+      sleep(5)
+      return
+    end
+    games = saved_games
+    puts games
     puts 'Enter which saved_game would you like to load: '
     load_file = gets.chomp
+    deserialize(load_file)
+  end
+
+  def deserialize(load_file)
     yaml = YAML.load_file("./saved_games/#{load_file}.yml")
     self.secret_word = yaml[0].secret_word
     self.guessed_word = yaml[0].guessed_word
     self.no_of_guesses = yaml[0].no_of_guesses
     self.guesses = yaml[0].guesses
+  end
+
+  def saved_games
+    puts 'Saved games: '
+    Dir['./saved_games/*'].map { |file| file.split('/')[-1].split('.')[0] }
   end
 end
 

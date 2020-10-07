@@ -1,6 +1,6 @@
 ---
 - !ruby/object:Game
-  secret_word: licitness
-  guessed_word: li_it____
-  no_of_guesses: 1
-  guesses: 'a b i l t m g h '
+  secret_word: mammalogy
+  guessed_word: _______g_
+  no_of_guesses: 3
+  guesses: 'd f g r '
