@@ -103,9 +103,17 @@ class Game
     end
     games = saved_games
     puts games
-    puts 'Enter which saved_game would you like to load: '
-    load_file = gets.chomp
-    deserialize(load_file)
+    deserialize(load_file(games))
+  end
+
+  def load_file(games)
+    loop do
+      puts 'Enter which saved_game would you like to load: '
+      load_file = gets.chomp
+      return load_file if games.include?(load_file)
+
+      puts 'The game you requested does not exist.'
+    end
   end
 
   def deserialize(load_file)
