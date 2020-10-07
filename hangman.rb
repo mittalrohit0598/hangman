@@ -39,6 +39,8 @@ class Game
   end
 
   def game_menu
+    puts `clear`
+    puts 'Welcome to the game of Hangman.'
     puts '(1) New Game'
     puts '(2) Load Game'
     input = gets.chomp
@@ -86,12 +88,19 @@ class Game
   end
 
   def save_game
-    File.open('./test.yml', 'w') { |f| YAML.dump([] << self, f) }
+    puts 'Enter name of your save file: '
+    save_file = gets.chomp
+    Dir.mkdir('saved_games') unless Dir.exist?('saved_games')
+    File.open("./saved_games/#{save_file}.yml", 'w') { |f| YAML.dump([] << self, f) }
     exit
   end
 
   def load_game
-    yaml = YAML.load_file('./test.yml')
+    puts 'Saved games: '
+    Dir['./saved_games/*'].each { |file| puts file.split('/')[-1].split('.')[0] }
+    puts 'Enter which saved_game would you like to load: '
+    load_file = gets.chomp
+    yaml = YAML.load_file("./saved_games/#{load_file}.yml")
     self.secret_word = yaml[0].secret_word
     self.guessed_word = yaml[0].guessed_word
     self.no_of_guesses = yaml[0].no_of_guesses

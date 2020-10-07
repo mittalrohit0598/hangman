@@ -1,0 +1,6 @@
+---
+- !ruby/object:Game
+  secret_word: nonfactual
+  guessed_word: _o__a___al
+  no_of_guesses: 1
+  guesses: 'a i l o m h p r '
