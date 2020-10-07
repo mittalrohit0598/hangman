@@ -43,18 +43,21 @@ class Game
     puts 'Welcome to the game of Hangman.'
     puts '(1) New Game'
     puts '(2) Load Game'
-    input = gets.chomp
     load_game if input == '2'
     play
   end
 
+  def input
+    loop do
+      input = gets.chomp
+      return input if %w[1 2].include?(input)
+
+      puts 'Invalid input. Choose again.'
+    end
+  end
+
   def solicit_guess
-    puts `clear`
-    puts 'Welcome to the game of Hangman.'
-    puts 'Save game by typing in "save".'
-    puts "You have #{no_of_guesses} guesses remaining."
-    puts guessed_word
-    puts "\nYour guesses so far: #{guesses}"
+    guess_info
     loop do
       puts 'Enter your guess(a - z): '
       guess = gets.chomp.downcase
@@ -65,6 +68,15 @@ class Game
       break
     end
     solicit_guess
+  end
+
+  def guess_info
+    puts `clear`
+    puts 'Welcome to the game of Hangman.'
+    puts 'Save game by typing in "save".'
+    puts "You have #{no_of_guesses} guesses remaining."
+    puts guessed_word
+    puts "\nYour guesses so far: #{guesses}"
   end
 
   def valid_guess?(guess)
