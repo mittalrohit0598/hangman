@@ -1,6 +1,0 @@
----
-- !ruby/object:Game
-  secret_word: defray
-  guessed_word: ____a_
-  no_of_guesses: 5
-  guesses: 'a b '
