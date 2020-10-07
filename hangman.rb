@@ -9,6 +9,8 @@ class SecretWord
     @word = choose_secret_word
   end
 
+  private
+
   def choose_secret_word
     dictionary = File.readlines('5desk.txt')
     loop do
@@ -28,6 +30,17 @@ class Game
     @guesses = String.new
   end
 
+  def game_menu
+    puts `clear`
+    puts 'Welcome to the game of Hangman.'
+    puts '(1) New Game'
+    puts '(2) Load Game'
+    load_game if input == '2'
+    play
+  end
+
+  private
+
   def play
     until no_of_guesses.zero?
       guess = solicit_guess
@@ -36,15 +49,6 @@ class Game
       break if win?
     end
     game_over_message
-  end
-
-  def game_menu
-    puts `clear`
-    puts 'Welcome to the game of Hangman.'
-    puts '(1) New Game'
-    puts '(2) Load Game'
-    load_game if input == '2'
-    play
   end
 
   def input
